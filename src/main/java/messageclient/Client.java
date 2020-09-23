@@ -4,10 +4,12 @@ import messageclient.ui.ClientWindow;
 import messageclient.ui.ServerPrompt;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -28,8 +30,14 @@ public class Client {
 
     public void run() {
         var scanner = new Scanner(in, "UTF-8");
-        while (true) {
-            frame.append(scanner.nextLine() + "\n");
+        try {
+            while (true) {
+                frame.append(scanner.nextLine() + "\n");
+            }
+        } catch (NoSuchElementException e) {
+            frame.setVisible(false);
+            JOptionPane.showMessageDialog(null, "Connection To Server Lost");
+            System.exit(-1);
         }
     }
 
