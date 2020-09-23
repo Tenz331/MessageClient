@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 /**
@@ -22,11 +23,11 @@ public class Client {
     }
 
     public static Client create(InputStream in, OutputStream out) {
-        return new Client(in, new ClientWindow(new PrintWriter(out)));
+        return new Client(in, new ClientWindow(new PrintWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8))));
     }
 
     public void run() {
-        var scanner = new Scanner(in);
+        var scanner = new Scanner(in, "UTF-8");
         while (true) {
             frame.append(scanner.nextLine() + "\n");
         }
