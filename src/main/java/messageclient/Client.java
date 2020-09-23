@@ -6,6 +6,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -39,7 +40,7 @@ public class Client {
         scroll.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
         frame.add(scroll, BorderLayout.CENTER);
 
-        var writer = new PrintWriter(out);
+        var writer = new PrintWriter(new OutputStreamWriter(out, StandardCharsets.UTF_8));
         JTextField textField = new JTextField();
         textField.setFont(f);
         frame.add(textField, BorderLayout.SOUTH);
@@ -58,7 +59,7 @@ public class Client {
     }
 
     public void run() {
-        var scanner = new Scanner(in);
+        var scanner = new Scanner(in, "UTF-8");
         while (true) area.append(scanner.nextLine() + "\n");
     }
 
